@@ -1,2 +1,4 @@
 export const SHOW_ALERT = 'SHOW_ALERT'
 export const HIDE_ALERT = 'HIDE_ALERT'
+export const CREATE_FOOD_LIST = 'CREATE_FOOD_LIST'
+export const REMOVE_FOOD_LIST = 'REMOVE_FOOD_LIST'
