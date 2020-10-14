@@ -7,7 +7,10 @@ import { FoodListContext } from '../context/foodlists/foodListContext'
 export const Home = () => {
 
 const {loading, foodLists} = useContext(FoodListContext)
-    return (
+console.log('Food Lists', foodLists)
+//console.log('Loading Food Lists', loading)
+
+return (
         <div>
             <Create />
                 {loading

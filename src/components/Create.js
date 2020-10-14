@@ -8,31 +8,18 @@ export const Create = () => {
     const alert = useContext(AlertContext)
     const foodLists = useContext(FoodListContext)
 
-    // function clear(){
-    //     let element = document.getElementById('foodList')
-    //     element.innerHTML = ""
-    // }
-
     const onClick = () => {
         if(value.trim()) {
-            // console.log(foodLists)
             alert.hide()
-            // console.log(document.getElementById('foodList').value)
-            // document.getElementById('foodList').value = ''
-            // console.log(document.getElementById('foodList').value)
-            //clear()
             foodLists.create(`${value}`)
-
-
         } else {
             alert.show('Enter the name of the food list!')
         }
     }
 
-
     return (
         <div className='input-group mb-3'>
-            <input id="foodList" type='text' className='form-control' placeholder='Create a food list'
+            <input id="foodList" type='text' className='form-control' placeholder='Enter the name of the new food list...'
                    value={value} onChange={event => setValue(event.target.value)}
             />
             <div className='input-group-append'>
@@ -41,9 +28,4 @@ export const Create = () => {
             </div>
         </div>
     )
-
-
-
-
-
 }

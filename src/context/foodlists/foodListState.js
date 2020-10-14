@@ -15,10 +15,7 @@ export const FoodListState = ({children}) => {
     // const hide = () => dispatch({type: HIDE_ALERT})
 
     const create = (text) => {
-        // const newLists = []
-        //state.foodList.length() > 0 ?
         state.foodLists.push({text})
-        console.log(state.foodLists)
         dispatch({
             type: CREATE_FOOD_LIST,
             payload: state.foodLists
