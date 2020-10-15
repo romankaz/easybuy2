@@ -1,4 +1,4 @@
-import React, { Fragment, forwardRef, useContext, useState } from 'react'
+import React, { Fragment, forwardRef, useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ReactSortable } from 'react-sortablejs'
 import { CreateItem } from '../components/CreateItem'
@@ -14,7 +14,23 @@ export const FoodListDetails = ({match}) => {
     const urlName = match.params.name
     // console.log(urlName)
 
-    const {loading, foodItems} = useContext(FoodListDetailsContext)
+    const {loading} = useContext(FoodListDetailsContext)
+    const foodItems = useContext(FoodListDetailsContext)
+    //const foodItems = useContext(FoodListDetailsContext)
+
+    //const [items, setItems] = useState([])
+
+    // setItems(foodItems)
+
+    // console.log(items)
+    // console.log("Food Items",foodItems)
+    // useEffect(() => {
+    //   console.log("Food Items Changed!",foodItems)
+    //   setItems(foodItems)
+    // })
+
+    // console.log("Items", items)
+
 
    // const [style, setStyle] = useState('list-group-item list-group-item-danger')
 
@@ -41,6 +57,8 @@ export const FoodListDetails = ({match}) => {
   //console.log('State Items', state)
   // console.log('Loading Food Items', loading)
 
+  console.log('Render foodItems', foodItems)
+
     return (
         <Fragment>
             <Link to="/" className="btn btn-link" style={{color:'#17a2b8', padding: '0rem'}}>
@@ -50,15 +68,17 @@ export const FoodListDetails = ({match}) => {
             <CreateItem />
             {loading
               ? <p className="text-center">Loading...</p>
-              : <ul className="list-group" style={{marginTop: '2rem'}}>
-                {/* <ReactSortable tag={CustomComponent} list={foodItems} setList={setState}> */}
-                  {foodItems.map((foodItem, index) => (
-                     //<li className='list-group-item' key={foodItem.id}>{foodItem.itemName}</li>
-                      <FoodListItem foodItem={foodItem} key={foodItem.id} index={index}/>
+              :
+                // <ul className="list-group" style={{marginTop: '2rem'}}>
+                <ReactSortable tag={CustomComponent} list={foodItems.foodItems} setList={foodItems.set}>
+                   {/* TODO: Fix the key issue!!! */}
+                  {foodItems.foodItems.map((item, index) => (
+                     //<li className='list-group-item' key={item.id}>{item.itemName}</li>
+                      <FoodListItem foodItem={item} key={item.id} index={index}/>
                     ))
                   }
-                {/* </ReactSortable> */}
-                </ul>
+                </ReactSortable>
+                //</ul>
 
             }
              {/* <ReactSortable tag={CustomComponent} list={foodItems} setList={setState}>

@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
 import { foodListDetailsReducer } from './foodListDetailsReducer'
-import { CREATE_FOOD_ITEM, REMOVE_FOOD_ITEM } from '../types'
+import { CREATE_FOOD_ITEM, REMOVE_FOOD_ITEM, SET_FOOD_ITEMS } from '../types'
 import { FoodListDetailsContext } from './foodListDetailsContext'
 
 
@@ -33,12 +33,20 @@ export const FoodListDetailsState = ({children}) => {
         type: REMOVE_FOOD_ITEM,
         payload: state.foodItems
     })
-}
+  }
+
+  const set = (foodItems) => {
+    dispatch({
+      type: SET_FOOD_ITEMS,
+      payload: foodItems
+  })
+
+  }
 
 const {foodItems, loading} = state
 
   return (
-    <FoodListDetailsContext.Provider value={{create, remove, foodItems, loading}}>
+    <FoodListDetailsContext.Provider value={{create, remove, set, foodItems, loading}}>
         {children}
     </FoodListDetailsContext.Provider>
   )

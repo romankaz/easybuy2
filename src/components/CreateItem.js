@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { FoodListDetailsContext } from '../context/foodlistdetails/foodListDetailsContext'
 import { AlertContext } from '../context/alert/alertContext'
 
@@ -17,6 +17,10 @@ export const CreateItem = () => {
       alert.show('Enter the name of the food item!')
     }
   }
+
+  useEffect(() => {
+    document.getElementById('foodList').value = ''
+  })
 
   return (
     <div className='input-group mb-3'>
