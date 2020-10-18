@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
 import { foodListDetailsReducer } from './foodListDetailsReducer'
-import { CREATE_FOOD_ITEM, REMOVE_FOOD_ITEM, SET_FOOD_ITEMS } from '../types'
+import { CREATE_FOOD_ITEM, REMOVE_FOOD_ITEM, SELECT_FOOD_ITEM, SET_FOOD_ITEMS } from '../types'
 import { FoodListDetailsContext } from './foodListDetailsContext'
 
 
@@ -15,9 +15,10 @@ export const FoodListDetailsState = ({children}) => {
 
 
   const create = (itemName) => {
-    const newFoodItems = state.foodItems.length === null
-            ? state.foodItems.push({id:0, itemName: itemName})
-            : state.foodItems.push({id: state.foodItems.length, itemName: itemName})
+    // state.foodItems.length === null
+    //     ? state.foodItems.push({id:0, itemName: itemName, checked: false})
+    //     : state.foodItems.push({id: state.foodItems.length, itemName: itemName})
+    state.foodItems.push({itemName: itemName, checked: false})
     // state.foodItems.push({itemName})
     //console.log(state.foodItems)
     dispatch({
@@ -43,10 +44,18 @@ export const FoodListDetailsState = ({children}) => {
 
   }
 
+  const select =  (index) => {
+    state.foodItems[index].checked = !state.foodItems[index].checked
+    dispatch({
+      type: SELECT_FOOD_ITEM,
+      payload: state.foodItems
+  })
+  }
+
 const {foodItems, loading} = state
 
   return (
-    <FoodListDetailsContext.Provider value={{create, remove, set, foodItems, loading}}>
+    <FoodListDetailsContext.Provider value={{create, remove, set, select, foodItems, loading}}>
         {children}
     </FoodListDetailsContext.Provider>
   )
