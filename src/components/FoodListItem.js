@@ -19,13 +19,15 @@ export const FoodListItem = ({foodItem, index}) => {
   const foodItems = useContext(FoodListDetailsContext)
 
   const removeFoodItem = (id) => {
+    console.log('Hi removing')
       foodItems.remove(id)
   }
 
   ///const [style, setStyle] = useState('list-group-item')
 
   const markItem = (id) => {
-    console.log(id)
+    console.log('Hi marking')
+
     foodItems.select(id)
     // console.log(target.checked)
     // target.checked = !target.checked
@@ -34,10 +36,11 @@ export const FoodListItem = ({foodItem, index}) => {
   }
 
   return (
-      <li className= {itemClassName} checked = {false} id={index} onDoubleClick={event => markItem(event.target.id)}>
-        <span className="align-middle">
+      <li className= {itemClassName} id={index} onDoubleClick={event => markItem(event.target.id)}>
+        {foodItem.itemName}
+        {/* <span className="align-middle">
           <i className="fas fa-shopping-basket mx-2" style={{color: '#17a2b8'}}/>
-        </span>{foodItem.itemName}
+        </span>{foodItem.itemName} */}
         <button type="button" className="close ml-auto p-2" aria-label="Close" onClick={event => removeFoodItem(event.target.id)}>
          <span id={index} aria-hidden="true" style={{color: 'red'}}>&times;</span>
         </button>

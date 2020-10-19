@@ -10,6 +10,7 @@ export const CreateItem = () => {
   const alert = useContext(AlertContext)
 
   const addFoodItem = () => {
+    // TODO: remove stored value from previous adding...
     if(value.trim()) {
       alert.hide()
       foodItems.create(`${value}`)
@@ -21,6 +22,7 @@ export const CreateItem = () => {
   useEffect(() => {
     document.getElementById('foodList').value = ''
   })
+
 
   return (
     <div className='input-group mb-3'>

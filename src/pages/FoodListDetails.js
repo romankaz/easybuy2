@@ -27,8 +27,7 @@ export const FoodListDetails = ({match}) => {
             <CreateItem />
             {loading
               ? <p className="text-center">Loading...</p>
-              :
-                <ReactSortable tag={CustomComponent} list={foodItems.foodItems} setList={foodItems.set}>
+              : <ReactSortable tag={CustomComponent} list={foodItems.foodItems} setList={foodItems.set}>
                   {foodItems.foodItems.map((item, index) => (
                       <FoodListItem foodItem={item} key={index} index={index}/>
                     ))

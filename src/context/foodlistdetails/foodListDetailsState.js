@@ -45,6 +45,7 @@ export const FoodListDetailsState = ({children}) => {
   }
 
   const select =  (index) => {
+    console.log(state.foodItems[index])
     state.foodItems[index].checked = !state.foodItems[index].checked
     dispatch({
       type: SELECT_FOOD_ITEM,
