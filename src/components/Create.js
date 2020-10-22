@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { AlertContext } from '../context/alert/alertContext'
 import { FoodListContext} from '../context/foodlists/foodListContext'
 
@@ -17,15 +17,15 @@ export const Create = () => {
         }
     }
 
-    useEffect(() => {
+    const removeInput = () => {
         document.getElementById('foodList').value = ''
-    })
+        setValue('')
+    }
 
     return (
         <div className='input-group mb-3'>
             <input id="foodList" type='text' className='form-control' placeholder='Enter the name of the new food list...'
-                   value={value} onChange={event => setValue(event.target.value)}
-            />
+                   value={value} onChange={event => setValue(event.target.value)} onFocus={removeInput}/>
             <div className='input-group-append'>
                 <button className='btn btn-info' type='button' onClick={onClick}>Create
                 </button>
