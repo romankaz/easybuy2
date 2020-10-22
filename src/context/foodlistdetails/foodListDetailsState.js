@@ -15,12 +15,7 @@ export const FoodListDetailsState = ({children}) => {
 
 
   const create = (itemName) => {
-    // state.foodItems.length === null
-    //     ? state.foodItems.push({id:0, itemName: itemName, checked: false})
-    //     : state.foodItems.push({id: state.foodItems.length, itemName: itemName})
     state.foodItems.push({itemName: itemName, checked: false})
-    // state.foodItems.push({itemName})
-    //console.log(state.foodItems)
     dispatch({
         type: CREATE_FOOD_ITEM,
         payload: state.foodItems
