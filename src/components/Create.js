@@ -8,10 +8,12 @@ export const Create = () => {
     const alert = useContext(AlertContext)
     const foodLists = useContext(FoodListContext)
 
+
     const onClick = () => {
         if(value.trim()) {
             alert.hide()
             foodLists.create(`${value}`)
+
         } else {
             alert.show('Enter the name of the food list!')
         }
