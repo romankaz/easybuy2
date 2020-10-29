@@ -20,12 +20,12 @@ export const FoodListItem = ({foodItem, index}) => {
 
   return (
       <li className= {itemClassName}>
-        <span className='align-middle' id={index} onClick={event => markItem(event.target.id)}>
+        <span className='align-middle' id={index} onTouchEnd={event => markItem(event.target.id)}>
           <i className="fas fa-shopping-basket mx-2 my-2" style={{color: '#17a2b8'}}/>
           {foodItem.itemName}
         </span>
 
-        <button type="button" className="close ml-auto p-2" aria-label="Close" onClick={event => removeFoodItem(event.target.id)}>
+        <button type="button" className="close ml-auto p-2" aria-label="Close" onTouchEnd={event => removeFoodItem(event.target.id)}>
           <span id={index} aria-hidden="true" style={{color: 'red'}}>&times;</span>
         </button>
       </li>

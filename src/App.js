@@ -7,26 +7,31 @@ import { AlertState } from './context/alert/alertState';
 import { FoodListState } from './context/foodlists/foodListState';
 import { FoodListDetails } from './pages/FoodListDetails';
 import { FoodListDetailsState } from './context/foodlistdetails/foodListDetailsState';
-
+import { Authorization } from './pages/Authorization';
+import { AuthorizationState } from './context/authorization/authorizationState';
 
 function App() {
+
   return (
-    <FoodListDetailsState>
-      <FoodListState>
-        <AlertState>
-        <BrowserRouter>
-          <Navbar />
-          <div className="container pt-4">
-            <Alert />
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/foodlist/:name" component={FoodListDetails} />
-            </Switch>
-          </div>
-        </BrowserRouter>
-        </AlertState>
-      </FoodListState>
-    </FoodListDetailsState>
+    <AuthorizationState>
+      <FoodListDetailsState>
+        <FoodListState>
+          <AlertState>
+          <BrowserRouter>
+            <Navbar />
+            <div className="container pt-4">
+              <Alert />
+              <Switch>
+                <Route path="/authorization" component={Authorization} />
+                <Route path="/" exact component={Home} />
+                <Route path="/foodlist/:name" component={FoodListDetails} />
+              </Switch>
+            </div>
+          </BrowserRouter>
+          </AlertState>
+        </FoodListState>
+      </FoodListDetailsState>
+    </AuthorizationState>
   );
 }
 

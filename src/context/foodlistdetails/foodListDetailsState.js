@@ -50,7 +50,7 @@ export const FoodListDetailsState = ({children}) => {
 const {foodItems, loading} = state
 
   return (
-    <FoodListDetailsContext.Provider value={{create, remove, set, select, foodItems, loading}}>
+    <FoodListDetailsContext.Provider value={{dispatch, create, remove, set, select, foodItems, loading}}>
         {children}
     </FoodListDetailsContext.Provider>
   )
