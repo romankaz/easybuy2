@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AuthorizationContext } from '../context/authorization/authorizationContext'
 
@@ -29,7 +29,8 @@ export const Authorization = () => {
     // <h1>
     // Authorization Page
     // </h1>
-    <div className="container">
+    // <div className="container">
+    <Fragment>
       <div id="login-row" className="row justify-content-center align-items-center">
           <div id="login-column" className="col-md-6">
               <div id="login-box" className="col-md-12">
@@ -61,6 +62,7 @@ export const Authorization = () => {
               </div>
           </div>
       </div>
-  </div>
+  </Fragment>
+  // </div>
   )
 }
