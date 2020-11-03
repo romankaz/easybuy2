@@ -9,7 +9,7 @@ export const Navbar = () => {
     const history = useHistory();
     const handleClick = () => {
         authorization.logout()
-        history.push('/authorization')
+        history.push('/')
     }
 
     useEffect( () => {
@@ -26,7 +26,7 @@ export const Navbar = () => {
             {!!authorization.token
                  ? <ul className="navbar-nav">
                             <li className="nav-item">
-                                <NavLink exact to="/" className="nav-link">My Food Lists</NavLink>
+                                <NavLink exact to="/home" className="nav-link">My Food Lists</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink to="/recipes" className="nav-link"> Recipes</NavLink>
@@ -37,7 +37,7 @@ export const Navbar = () => {
                     </ul>
                 : <ul className="navbar-nav">
                     <li className="nav-item">
-                        <NavLink to="/authorization" className="nav-link"> Authorization</NavLink>
+                        <NavLink to="/" className="nav-link"> Authorization</NavLink>
                     </li>
                 </ul>
             }

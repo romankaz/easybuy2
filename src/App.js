@@ -12,6 +12,7 @@ import { AuthorizationState } from './context/authorization/authorizationState';
 
 function App() {
 
+
   return (
     <AuthorizationState>
       <FoodListDetailsState>
@@ -22,8 +23,8 @@ function App() {
             <div className="container pt-4">
               <Alert />
               <Switch>
-                <Route path="/authorization" component={Authorization} />
-                <Route path="/" exact component={Home} />
+                <Route path="/" exact component={Authorization} />
+                <Route path="/home" component={Home} />
                 <Route path="/foodlist/:name" component={FoodListDetails} />
               </Switch>
             </div>

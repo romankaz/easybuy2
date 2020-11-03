@@ -17,8 +17,8 @@ export const FoodListDetails = ({match}) => {
 
     return (
         <Fragment>
-            <h2 style={{marginTop: '1rem', marginBottom: '1rem', color: 'rgb(23, 162, 184)'}}>{urlName}</h2>
-            <CreateItem />
+
+            <CreateItem foodListName={urlName} />
 
             {loading
               ? <p className="text-center">Loading...</p>
