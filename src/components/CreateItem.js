@@ -3,7 +3,7 @@ import { FoodListDetailsContext } from '../context/foodlistdetails/foodListDetai
 import { AlertContext } from '../context/alert/alertContext'
 
 
-export const CreateItem = () => {
+export const CreateItem = ({foodListName}) => {
 
   const [value, setValue] = useState('')
   const foodItems = useContext(FoodListDetailsContext)
@@ -24,7 +24,9 @@ export const CreateItem = () => {
   }
 
   return (
-    <div className='input-group mb-3'>
+    <div className='sticky-top' style={{backgroundColor:'white'}}>
+      <h2 style={{marginTop: '1rem', marginBottom: '1rem', color: 'rgb(23, 162, 184)'}}>{foodListName}</h2>
+      <div className='input-group mb-3' style={{position: 'static'}}>
         <input id="foodList" type='text' className='form-control' placeholder='Add a food item to your list ...'
               value={value} onChange={event => setValue(event.target.value)} onFocus={removeInput}/>
         <div className='input-group-append'>
@@ -32,6 +34,8 @@ export const CreateItem = () => {
             <button className='btn btn-info' type='button' onClick={addFoodItem}>Add
             </button>
         </div>
+      </div>
     </div>
+
   )
 }

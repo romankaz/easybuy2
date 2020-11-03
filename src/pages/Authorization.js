@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AuthorizationContext } from '../context/authorization/authorizationContext'
 
@@ -13,7 +13,7 @@ export const Authorization = () => {
   const loginHandler = () => {
     if(email.trim() && password.trim()) {
       authorization.setCred(email, password, true)
-      history.push('/')
+      history.push('/home')
     }
 
   }
@@ -21,20 +21,14 @@ export const Authorization = () => {
   const registerHandler = () => {
     if(email.trim() && password.trim()) {
       authorization.setCred(email, password, false)
-      history.push('/')
+      history.push('/home')
     }
   }
 
   return (
-    // <h1>
-    // Authorization Page
-    // </h1>
-    // <div className="container">
-    <Fragment>
-      <div id="login-row" className="row justify-content-center align-items-center">
+    <div id="login-row" className="row justify-content-center align-items-center">
           <div id="login-column" className="col-md-6">
-              <div id="login-box" className="col-md-12">
-                  {/* <form id="login-form" class="form" action="" method="post"> */}
+          <div id="login-box" className="col-md-12">
                       <h3 className="text-center text-info">Authorization</h3>
                       <div className="form-group">
                           <label className="text-info">Username:</label><br/>
@@ -58,11 +52,9 @@ export const Authorization = () => {
                       <div id="register-link" className="text-right">
                           <a href="#" className="text-info">Forgot password</a>
                       </div>
-                  {/* </form> */}
-              </div>
+          </div>
           </div>
       </div>
-  </Fragment>
-  // </div>
+
   )
 }
