@@ -8,7 +8,8 @@ import { authorizationReducer } from './authorizationReducer'
 export const AuthorizationState = ({children}) => {
 
   const initialState =  {
-    token: null
+    token: null,
+    userId: null
   }
 
   const [credentials, setCredentials] = useState({
@@ -33,7 +34,7 @@ export const AuthorizationState = ({children}) => {
 
 
 
-  const {token} = state
+  const {token, userId} = state
 
   useEffect( () => {
 
@@ -41,6 +42,7 @@ export const AuthorizationState = ({children}) => {
 
     const email = credentials.email
     const password = credentials.password
+    //console.log("Hello credentials!", email, password)
 
     if(email !== '' && password !== '')
     {
@@ -49,10 +51,10 @@ export const AuthorizationState = ({children}) => {
         password,
         returnSecureToken:true
       }
-
-      let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCO5OwNcAqBDWghxSiIRO_nDH1n-OPzAsQ'
+      // Databank url: https://react-easybuy.firebaseio.com/
+      let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA_WX968WQBZBf86LE_dzFX-c-YqU0w3OM'
       if (credentials.isLogin) {
-            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCO5OwNcAqBDWghxSiIRO_nDH1n-OPzAsQ'
+            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA_WX968WQBZBf86LE_dzFX-c-YqU0w3OM'
       }
 
       async function auth() {
@@ -63,7 +65,8 @@ export const AuthorizationState = ({children}) => {
         localStorage.setItem('userId', data.localId)
         localStorage.setItem('expirationDate', expirationDate)
 
-        dispatch(authSuccess(data.idToken))
+        dispatch(authSuccess(data.idToken, data.localId))
+
 
         autoLogout(data.expiresIn)
       }
@@ -77,10 +80,10 @@ export const AuthorizationState = ({children}) => {
     }
   },[credentials])
 
-  const authSuccess = (token) => {
+  const authSuccess = (token, userId) => {
     return {
       type: AUTH_SUCCESS,
-      payload: token
+      payload: {token, userId}
     }
   }
 
@@ -101,6 +104,7 @@ export const AuthorizationState = ({children}) => {
 
   const autoLogin = () => {
     const token = localStorage.getItem('token')
+    const userId = localStorage.getItem('userId')
     if(!token) {
       logout()
     } else {
@@ -108,7 +112,8 @@ export const AuthorizationState = ({children}) => {
       if(expirationDate <= new Date()) {
         logout()
       } else {
-        dispatch(authSuccess(token))
+
+        dispatch(authSuccess(token,userId))
         autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000)
       }
     }
@@ -116,7 +121,7 @@ export const AuthorizationState = ({children}) => {
 
 
   return (
-    <AuthorizationContext.Provider value={{setCred, logout, autoLogin, token}}>
+    <AuthorizationContext.Provider value={{setCred, logout, autoLogin, token, userId}}>
         {children}
     </AuthorizationContext.Provider>
   )

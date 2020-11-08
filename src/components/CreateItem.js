@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { FoodListDetailsContext } from '../context/foodlistdetails/foodListDetailsContext'
 import { AlertContext } from '../context/alert/alertContext'
 
@@ -7,7 +7,15 @@ export const CreateItem = ({foodListName}) => {
 
   const [value, setValue] = useState('')
   const foodItems = useContext(FoodListDetailsContext)
+  //const foodListDetails = useContext(FoodListDetailsContext)
+
+  //console.log(foodListDetails)
+  //foodListName.initName(`${value}`)
   const alert = useContext(AlertContext)
+
+  useEffect (() => {
+    foodItems.initName(foodListName)
+  },[])
 
   const addFoodItem = () => {
     if(value.trim()) {

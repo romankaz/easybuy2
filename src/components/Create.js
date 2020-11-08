@@ -9,6 +9,7 @@ export const Create = () => {
     const foodLists = useContext(FoodListContext)
 
 
+
     const onClick = () => {
         if(value.trim()) {
             alert.hide()

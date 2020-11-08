@@ -1,14 +1,20 @@
-import React, { useReducer } from 'react'
+import React, { useContext, useReducer } from 'react'
 import { foodListDetailsReducer } from './foodListDetailsReducer'
-import { CREATE_FOOD_ITEM, REMOVE_FOOD_ITEM, SELECT_FOOD_ITEM, SET_FOOD_ITEMS } from '../types'
+import { CREATE_FOOD_ITEM, INIT_FOOD_LIST_NAME, REMOVE_FOOD_ITEM, SELECT_FOOD_ITEM, SET_FOOD_ITEMS, STORE_FAILURE } from '../types'
 import { FoodListDetailsContext } from './foodListDetailsContext'
+import axiosFoodlist from '../../axios/axios-foodlist'
+import { AuthorizationContext } from '../authorization/authorizationContext'
 
 
 export const FoodListDetailsState = ({children}) => {
 
+  const {token, userId} = useContext(AuthorizationContext)
+
   const initialState =  {
     foodItems: [],
-    loading: false
+    foodListName: '',
+    loading: false,
+    isError: false
   }
 
   const [state, dispatch] = useReducer(foodListDetailsReducer, initialState)
@@ -20,6 +26,25 @@ export const FoodListDetailsState = ({children}) => {
         type: CREATE_FOOD_ITEM,
         payload: state.foodItems
     })
+  }
+
+  const storeData = async () => {
+    try {
+      //await axiosFoodlist.delete(`${userId}/foodLists/${state.foodListName}.json`)
+      console.log(token)
+      await axiosFoodlist.put(`${userId}/foodLists/${state.foodListName}.json`, state.foodItems)
+    } catch (error) {
+      dispatch({
+        type: STORE_FAILURE
+      })
+    }
+  }
+
+  const initName = (foodListName) => {
+    dispatch({
+      type: INIT_FOOD_LIST_NAME,
+      payload: {foodListName}
+  })
   }
 
   const remove = (index) => {
@@ -47,10 +72,10 @@ export const FoodListDetailsState = ({children}) => {
   })
   }
 
-const {foodItems, loading} = state
+const {foodItems,foodListName, loading, isError} = state
 
   return (
-    <FoodListDetailsContext.Provider value={{dispatch, create, remove, set, select, foodItems, loading}}>
+    <FoodListDetailsContext.Provider value={{dispatch, storeData, create, remove, set, select, initName, foodItems,foodListName, loading, isError}}>
         {children}
     </FoodListDetailsContext.Provider>
   )

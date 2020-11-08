@@ -1,4 +1,4 @@
-import { CREATE_FOOD_LIST, REMOVE_FOOD_LIST } from "../types";
+import { CREATE_FOOD_LIST, INIT_FOOD_LIST_NAME, REMOVE_FOOD_LIST } from "../types";
 
 const handlers = {
     [CREATE_FOOD_LIST]: (state, {payload}) => ({...state, foodLists: payload, loading: false}),

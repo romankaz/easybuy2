@@ -8,6 +8,8 @@ export const Home = () => {
 
 const {loading, foodLists} = useContext(FoodListContext)
 
+//useEffect
+
 return (
         <Fragment>
             <h2 style={{marginTop: '1rem', marginBottom: '1rem', color: 'rgb(23, 162, 184)'}}>My Food Lists</h2>
