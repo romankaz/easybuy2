@@ -1,8 +1,8 @@
 import { AUTH_SUCCESS, AUTH_LOGOUT } from "../types";
 
 const handlers = {
-    [AUTH_SUCCESS]: (state, {payload}) => ({...state, token: payload}),
-    [AUTH_LOGOUT]: (state) => ({...state, token: null}),
+    [AUTH_SUCCESS]: (state, {payload}) => ({...state, ...payload}),
+    [AUTH_LOGOUT]: (state) => ({...state, token: null, userId: null}),
 
     DEFAULT: state => state
 }
