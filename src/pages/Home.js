@@ -1,14 +1,23 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useEffect } from 'react'
 import { Create } from '../components/Create'
 import { FoodList } from '../components/FoodList'
+import { AlertContext } from '../context/alert/alertContext'
 import { FoodListContext } from '../context/foodlists/foodListContext'
 
 
 export const Home = () => {
 
-const {loading, foodLists} = useContext(FoodListContext)
+const {loading} = useContext(FoodListContext)
+const foodLists = useContext(FoodListContext)
+const alert = useContext(AlertContext)
 
-//useEffect
+useEffect(() => {
+    foodLists.fetchLists()
+    if(foodLists.isError) {
+
+        alert.show('Error by reading the food lists ...try again later', 'danger')
+    }
+}, [])
 
 return (
         <Fragment>
@@ -17,7 +26,7 @@ return (
                 {loading
                 ? <p className="text-center">Loading...</p>
                 : <ul className="nav flex-column">
-                    {foodLists.map((foodList, index) =>
+                    {foodLists.foodLists.map((foodList, index) =>
                         <FoodList foodList={foodList} key={index} index={index}/>
                     )}
                   </ul>
