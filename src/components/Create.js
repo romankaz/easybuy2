@@ -12,9 +12,18 @@ export const Create = () => {
 
     const onClick = () => {
         if(value.trim()) {
-            alert.hide()
-            foodLists.create(`${value}`)
-
+            let isDefined = false
+            for(let i=0; i<foodLists.foodLists.length; i++) {
+                if(foodLists.foodLists[i].trim().localeCompare(value.trim()) === 0) {
+                    alert.show('The name of the Food List exists already!')
+                    isDefined = true
+                    break
+                }
+            }
+            if(!isDefined) {
+                alert.hide()
+                foodLists.create(`${value}`)
+            }
         } else {
             alert.show('Enter the name of the food list!')
         }
@@ -27,7 +36,7 @@ export const Create = () => {
 
     return (
         <div className='input-group mb-3'>
-            <input id="foodList" type='text' className='form-control' placeholder='Enter the name of the new food list...'
+            <input id="foodList" type='text' autoComplete="off" className='form-control' placeholder='Enter the name of the new food list...'
                    value={value} onChange={event => setValue(event.target.value)} onFocus={removeInput}/>
             <div className='input-group-append'>
                 <button className='btn btn-info' type='button' onClick={onClick}>Create

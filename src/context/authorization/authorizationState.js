@@ -60,6 +60,7 @@ export const AuthorizationState = ({children}) => {
       async function auth() {
         const response = await Axios.post(url, authData)
         const data = response.data
+        //console.log(data)
         const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
         localStorage.setItem('token', data.idToken)
         localStorage.setItem('userId', data.localId)

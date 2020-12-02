@@ -15,7 +15,6 @@ export const Authorization = () => {
       authorization.setCred(email, password, true)
       history.push('/home')
     }
-
   }
 
   const registerHandler = () => {
@@ -39,19 +38,19 @@ export const Authorization = () => {
                           <input type="password" name="password" id="password" className="form-control" value={password} onChange={event => setPassword(event.target.value)}/>
                       </div>
                       <div className="form-group">
-                          <label className="text-info">
+                          {/* <label className="text-info">
                             <span>Remember me</span> 
                             <span><input id="remember-me" name="remember-me" type="checkbox"/>
                               </span>
-                            </label><br/>
+                            </label><br/> */}
                         <div className="row-md-12 d-flex justify-content-between">
-                          <button type="button" className="btn btn-info btn-md" onClick={loginHandler}>Log in</button>
                           <button type="button" className="btn btn-info btn-md" onClick={registerHandler}>Sign up</button>
+                          <button type="button" className="btn btn-info btn-md" onClick={loginHandler}>Log in</button>
                         </div>
                       </div>
-                      <div id="register-link" className="text-right">
+                      {/* <div id="register-link" className="text-right">
                           <a href="#" className="text-info">Forgot password</a>
-                      </div>
+                      </div> */}
           </div>
           </div>
       </div>
