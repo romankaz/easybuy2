@@ -35,7 +35,6 @@ export const FoodList = ({ foodList, index }) => {
                     <button type="button" className="btn btn-outline-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span className="sr-only">Toggle Dropdown</span>
                     </button>
-
                     <div className="dropdown-menu">
                         {/* <a className="dropdown-item" style={{color:'#17a2b8'}} href="#" id={index} onClick={copyFoodList}>Copy</a>
                         <div role="separator" className="dropdown-divider"></div> */}
