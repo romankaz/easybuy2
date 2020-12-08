@@ -13,11 +13,16 @@ const alert = useContext(AlertContext)
 
 useEffect(() => {
     foodLists.fetchLists()
-    if(foodLists.isError) {
+    // if(foodLists.isError) {
+    //     alert.show('Error by reading the food lists ...try again later', 'danger')
+    // }
+}, [])
 
+useEffect(() => {
+    if(foodLists.isErrorFetch) {
         alert.show('Error by reading the food lists ...try again later', 'danger')
     }
-}, [])
+}, [foodLists.isErrorFetch])
 
 return (
         <Fragment>

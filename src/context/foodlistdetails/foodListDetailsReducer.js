@@ -7,12 +7,12 @@ const handlers = {
     [SELECT_FOOD_ITEM]: (state, {payload}) => ({...state, foodItems: payload, loading: false}),
     [INIT_FOOD_LIST_NAME] : (state, {payload}) => ({...state, foodListName: payload}),
     [STORE_SUCCESS] : (state, {payload}) => ({...state, disabled: true}),
-    [STORE_FAILURE] : (state, {payload}) => ({...state, isError: true}),
+    [STORE_FAILURE] : (state, {payload}) => ({...state, isErrorStore: true}),
     [ENABLE_FOODLIST] : (state, {payload}) => ({...state, disabled: false}),
 
-    [FETCH_ITEMS_INIT]: (state, {payload}) => ({...state, loading: true, isError: false}),
-    [FETCH_ITEMS_SUCCESS]: (state, {payload}) => ({...state, foodItems: payload, isError: false, loading: false}),
-    [FETCH_ITEMS_FAILURE]: (state, {payload}) => ({...state, loading: false, isError: true}),
+    [FETCH_ITEMS_INIT]: (state, {payload}) => ({...state, loading: true, isErrorStore: false, isErrorFetch: false}),
+    [FETCH_ITEMS_SUCCESS]: (state, {payload}) => ({...state, foodItems: payload, isErrorStore: false, isErrorFetch: false, loading: false}),
+    [FETCH_ITEMS_FAILURE]: (state, {payload}) => ({...state, loading: false, isErrorFetch: true}),
 
     DEFAULT: state => state
 }

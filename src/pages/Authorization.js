@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { AlertContext } from '../context/alert/alertContext'
 import { AuthorizationContext } from '../context/authorization/authorizationContext'
 
 export const Authorization = () => {
@@ -7,22 +8,36 @@ export const Authorization = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const authorization = useContext(AuthorizationContext)
+  const alert = useContext(AlertContext)
 
   const history = useHistory();
 
+
   const loginHandler = () => {
+
     if(email.trim() && password.trim()) {
       authorization.setCred(email, password, true)
-      history.push('/home')
+
+
+
     }
   }
 
   const registerHandler = () => {
     if(email.trim() && password.trim()) {
       authorization.setCred(email, password, false)
-      history.push('/home')
+      //history.push('/home')
     }
   }
+
+  useEffect( () => {
+    if(authorization.error.isError) {
+      alert.show(authorization.error.message, 'danger')
+    } else if(authorization.token) {
+      history.push('/home')
+    }
+  }, [authorization])
+
 
   return (
     <div id="login-row" className="row justify-content-center align-items-center">

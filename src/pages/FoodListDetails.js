@@ -21,10 +21,15 @@ export const FoodListDetails = ({match}) => {
     useEffect(() => {
       foodItems.initName(urlName)
       foodItems.fetchItems(urlName)
-      if(foodItems.isError) {
-        alert.show('Error by reading the food items ...try again later')
-      }
   }, [foodItems.disabled])
+
+
+  useEffect(() => {
+
+    if(foodItems.isErrorFetch) {
+      alert.show('Error by reading the food items ...try again later', 'danger')
+    }
+}, [foodItems.isErrorFetch])
 
     return (
         <Fragment>

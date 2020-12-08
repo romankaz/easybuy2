@@ -10,6 +10,7 @@ export const Wrapper = () => {
 
   const authorization = useContext(AuthorizationContext)
 
+
   useEffect( () => {
     authorization.autoLogin()
   }, [])
@@ -20,7 +21,7 @@ export const Wrapper = () => {
     </Switch>
   )
 
-  if(authorization.token) {
+  if(authorization.token && !authorization.error.isError) {
     routes = (
     <Switch>
       <Route path="/" exact component={Authorization} />

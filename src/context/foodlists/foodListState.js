@@ -12,7 +12,8 @@ export const FoodListState = ({children}) => {
     const initialState = {
         foodLists: [],
         loading: false,
-        isError: false
+        isErrorFetch: false,
+        isErrorRemove: false
     }
 
     const [state, dispatch] = useReducer(foodListReducer, initialState)
@@ -32,7 +33,7 @@ export const FoodListState = ({children}) => {
     const fetchLists = async () => {
         dispatch({ type: FETCH_LISTS_INIT })
         try {
-            const response = await axiosFoodlist.get(`${userId}/foodLists.json?shallow=true`)
+            const response = await axiosFoodlist.get(`foodlists/${userId}.json?shallow=true`)
            // console.log(response.data)
             state.foodLists = []
             if(!!response.data) {
@@ -43,7 +44,6 @@ export const FoodListState = ({children}) => {
                 dispatch({ type: FETCH_LISTS_SUCCESS, payload: state.foodLists })
             }
         }catch (error) {
-            console.log(error)
             dispatch({ type: FETCH_LISTS_FAILURE })
           }
     }
@@ -59,30 +59,25 @@ export const FoodListState = ({children}) => {
     //     console.log(userId)
     // }
 
-    const remove = (index) => {
-        removeFoodList(state.foodLists[index])
-        state.foodLists.splice(index, 1)
-
-        dispatch({
-            type: REMOVE_FOOD_LIST,
-            payload: state.foodLists
-        })
-    }
-
-    const removeFoodList = async (foodList) => {
-
+    const remove = async (index) => {
+        //removeFoodList(state.foodLists[index])
         try {
-            await axiosFoodlist.delete(`${userId}/foodLists/${foodList}.json`)
+            await axiosFoodlist.delete(`foodlists/${userId}/${state.foodLists[index]}.json`)
+            state.foodLists.splice(index, 1)
+            dispatch({
+                type: REMOVE_FOOD_LIST,
+                payload: state.foodLists
+            })
         } catch (error) {
             console.log(error)
             dispatch({ type: DELETE_LIST_FAILURE })
         }
     }
 
-   const {foodLists, loading, isError} = state
+   const {foodLists, loading, isErrorFetch, isErrorRemove} = state
 
    return (
-        <FoodListContext.Provider value={{create, remove, fetchLists, foodLists, loading, isError}}>
+        <FoodListContext.Provider value={{create, remove, fetchLists, foodLists, loading, isErrorFetch, isErrorRemove}}>
             {children}
         </FoodListContext.Provider>
    )

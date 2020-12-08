@@ -1,6 +1,6 @@
 import Axios from 'axios'
-import React, { useEffect, useReducer, useState } from 'react'
-import { AUTH_LOGOUT, AUTH_SUCCESS } from '../types'
+import React, { useReducer } from 'react'
+import { AUTH_ERROR, AUTH_LOGOUT, AUTH_SUCCESS } from '../types'
 import { AuthorizationContext } from './authorizationContext'
 import { authorizationReducer } from './authorizationReducer'
 
@@ -9,14 +9,15 @@ export const AuthorizationState = ({children}) => {
 
   const initialState =  {
     token: null,
-    userId: null
+    userId: null,
+    error: { isError: false, message: ''}
   }
 
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-    isLogin: false
-  })
+  // const [credentials, setCredentials] = useState({
+  //   email: '',
+  //   password: '',
+  //   isLogin: false
+  // })
 
   const [state, dispatch] = useReducer(authorizationReducer, initialState)
 
@@ -28,64 +29,107 @@ export const AuthorizationState = ({children}) => {
   //   })
   // }
 
-  const setCred = (email, password, isLogin) => {
-    setCredentials({email, password, isLogin})
+  // const setCred = (email, password, isLogin) => {
+  //   setCredentials({email, password, isLogin})
+  // }
+
+  const setCred = async (email, password, isLogin) => {
+    const authData = {
+      email,
+      password,
+      returnSecureToken:true
+    }
+     // Databank url: https://react-easybuy.firebaseio.com/
+     let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA_WX968WQBZBf86LE_dzFX-c-YqU0w3OM'
+     if (isLogin) {
+           url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA_WX968WQBZBf86LE_dzFX-c-YqU0w3OM'
+     }
+
+    try {
+      const response = await Axios.post(url, authData)
+      console.log(response)
+      const data = response.data
+      //console.log(data)
+      const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
+      localStorage.setItem('token', data.idToken)
+      localStorage.setItem('userId', data.localId)
+      localStorage.setItem('expirationDate', expirationDate)
+      autoLogout(data.expiresIn)
+      dispatch(authSuccess(data.idToken, data.localId))
+      } catch (error) {
+        console.log('Error: ', error)
+        dispatch({
+          type: AUTH_ERROR,
+          payload: {token: null, userId: null, error: {isError: true, message: error.response ? error.response.data.error.message : error.toString()}}
+        })
+      }
   }
 
 
 
-  const {token, userId} = state
+  const {token, userId, error} = state
 
-  useEffect( () => {
+  // useEffect( () => {
 
-    let didCancel = false
+  //   let didCancel = false
 
-    const email = credentials.email
-    const password = credentials.password
-    //console.log("Hello credentials!", email, password)
+  //   const email = credentials.email
+  //   const password = credentials.password
+  //   //console.log("Hello credentials!", email, password)
 
-    if(email !== '' && password !== '')
-    {
-      const authData = {
-        email,
-        password,
-        returnSecureToken:true
-      }
-      // Databank url: https://react-easybuy.firebaseio.com/
-      let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA_WX968WQBZBf86LE_dzFX-c-YqU0w3OM'
-      if (credentials.isLogin) {
-            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA_WX968WQBZBf86LE_dzFX-c-YqU0w3OM'
-      }
+  //   if(email !== '' && password !== '')
+  //   {
+  //     const authData = {
+  //       email,
+  //       password,
+  //       returnSecureToken:true
+  //     }
+  //     // Databank url: https://react-easybuy.firebaseio.com/
+  //     let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA_WX968WQBZBf86LE_dzFX-c-YqU0w3OM'
+  //     if (credentials.isLogin) {
+  //           url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA_WX968WQBZBf86LE_dzFX-c-YqU0w3OM'
+  //     }
 
-      async function auth() {
-        const response = await Axios.post(url, authData)
-        const data = response.data
-        //console.log(data)
-        const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
-        localStorage.setItem('token', data.idToken)
-        localStorage.setItem('userId', data.localId)
-        localStorage.setItem('expirationDate', expirationDate)
+  //     async function auth() {
+  //       const response = null
+  //       try {
+  //         response = await Axios.post(url, authData)
+  //         console.log(response)
+  //         const data = response.data
+  //         //console.log(data)
+  //         const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
+  //         localStorage.setItem('token', data.idToken)
+  //         localStorage.setItem('userId', data.localId)
+  //         localStorage.setItem('expirationDate', expirationDate)
+  //         autoLogout(data.expiresIn)
+  //         dispatch(authSuccess(data.idToken, data.localId))
+  //        } catch (error) {
+  //          console.log('Error: ', error.response.data.error.message)
+  //          dispatch({
+  //             type: AUTH_ERROR,
+  //             payload: {token: null, userId: null, error: {...error, isError: true, message: error.response.data.error.message}}
+  //          })
+  //        }
 
-        dispatch(authSuccess(data.idToken, data.localId))
 
 
-        autoLogout(data.expiresIn)
-      }
 
-      auth()
+  //     }
 
-    }
+  //     auth()
 
-    return () => {
-      didCancel = true
-    }
-  },[credentials])
+  //   }
+
+  //   return () => {
+  //     didCancel = true
+  //   }
+  // },[credentials])
 
   const authSuccess = (token, userId) => {
     return {
       type: AUTH_SUCCESS,
-      payload: {token, userId}
-    }
+      payload: {token, userId, error: {...error, isError: false, message: ''}
+    }}
   }
 
   const autoLogout = (time) => {
@@ -122,7 +166,7 @@ export const AuthorizationState = ({children}) => {
 
 
   return (
-    <AuthorizationContext.Provider value={{setCred, logout, autoLogin, token, userId}}>
+    <AuthorizationContext.Provider value={{setCred, logout, autoLogin, token, userId, error}}>
         {children}
     </AuthorizationContext.Provider>
   )

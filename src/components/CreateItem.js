@@ -25,12 +25,19 @@ export const CreateItem = ({foodListName}) => {
     //foodItems.initName(foodListName)
     foodItems.storeData()
     if(foodItems.isError) {
-        alert.show("Something went wrong...try again", 'danger')
+      alert.show("Something went wrong...try again", 'danger')
     } else {
       // disableSave(true)
       alert.show("Food list is saved successfully!", 'success')
     }
 }
+
+useEffect(() => {
+
+  if(foodItems.isErrorStore) {
+    alert.show("Something went wrong...try again", 'danger')
+  }
+}, [foodItems.isErrorStore])
 
   const removeInput = () => {
     document.getElementById('foodList').value = ''

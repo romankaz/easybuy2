@@ -15,7 +15,8 @@ export const FoodListDetailsState = ({children}) => {
     foodListName: '',
     disabled: true,
     loading: false,
-    isError: false
+    isErrorStore: false,
+    isErrorFetch: false
   }
 
   const [state, dispatch] = useReducer(foodListDetailsReducer, initialState)
@@ -33,7 +34,7 @@ export const FoodListDetailsState = ({children}) => {
   const storeData = async (foodListName = state.foodListName) => {
     try {
       // await axiosFoodlist.delete(`${userId}/foodLists/${state.foodListName}.json`)
-      await axiosFoodlist.put(`${userId}/foodLists/${foodListName}.json`, state.foodItems)
+      await axiosFoodlist.put(`foodlists/${userId}/${foodListName}.json`, state.foodItems)
       dispatch({
         type: STORE_SUCCESS
       })
@@ -66,10 +67,14 @@ export const FoodListDetailsState = ({children}) => {
 //   }
 
   const fetchItems = async (foodListname) => {
+  //   dispatch({
+  //     type: INIT_FOOD_LIST_NAME,
+  //     payload: foodListName
+  // })
     dispatch({ type: FETCH_ITEMS_INIT })
 
     try {
-        const response = await axiosFoodlist.get(`${userId}/foodLists/${foodListname}.json`)
+        const response = await axiosFoodlist.get(`foodlists/${userId}/${foodListname}.json`)
         //console.log(response.data)
         state.foodItems = []
         if(!!response.data) {
@@ -119,10 +124,10 @@ export const FoodListDetailsState = ({children}) => {
   })
   }
 
-const {foodItems,foodListName, loading, isError, disabled} = state
+const {foodItems,foodListName, loading, isErrorStore, isErrorFetch, disabled} = state
 
   return (
-    <FoodListDetailsContext.Provider value={{dispatch, storeData, fetchItems, create, remove, set, select, initName, enable, foodItems,foodListName, loading, isError, disabled}}>
+    <FoodListDetailsContext.Provider value={{dispatch, storeData, fetchItems, create, remove, set, select,initName, enable, foodItems,foodListName, loading, isErrorStore, isErrorFetch, disabled}}>
         {children}
     </FoodListDetailsContext.Provider>
   )

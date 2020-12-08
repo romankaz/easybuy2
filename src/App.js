@@ -6,6 +6,7 @@ import { FoodListState } from './context/foodlists/foodListState';
 import { FoodListDetailsState } from './context/foodlistdetails/foodListDetailsState';
 import { AuthorizationState } from './context/authorization/authorizationState';
 import { Wrapper } from './components/Wrapper';
+import { Alert } from './components/Alert';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <FoodListState>
           <AlertState>
           <BrowserRouter>
+
             <Navbar />
             <Wrapper />
           </BrowserRouter>

@@ -26,14 +26,14 @@ export const FoodListItem = ({foodItem, index}) => {
           {foodItem.itemName}
         </span>
 
-        {/* <button type="button" class="btn btn-outline-danger" id={index} disabled={foodItems.disabled} onClick={event => removeFoodItem(event.target.id)}>X</button> */}
+        <button type="button" class="btn btn-outline-danger" id={index} onTouchEnd={event => removeFoodItem(event.target.id)}>X</button>
 
         {/* <button type="button" className="close ml-auto p-2" disabled={foodItems.disabled} aria-label="Close" onTouchEnd={event => removeFoodItem(event.target.id)}>
           <span id={index} aria-hidden="true" style={{color: 'red'}}>&times;</span>
         </button> */}
 
 
-        <div className='dropleft'>
+        {/* <div className='dropleft'>
             <button type="button" className="btn btn-outline-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton">
                 <span className="sr-only">Toggle Dropdown</span>
             </button>
@@ -41,7 +41,7 @@ export const FoodListItem = ({foodItem, index}) => {
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a className="dropdown-item" href="#" style={{color:'red'}} id={index} onClick={event => removeFoodItem(event.target.id)}>Remove</a>
             </div>
-        </div>
+        </div> */}
       </li>
   )
 }

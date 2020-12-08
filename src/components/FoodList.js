@@ -1,22 +1,22 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AlertContext } from '../context/alert/alertContext'
-import { FoodListDetailsContext } from '../context/foodlistdetails/foodListDetailsContext'
 import { FoodListContext } from '../context/foodlists/foodListContext'
 
 export const FoodList = ({ foodList, index }) => {
 
     const foodLists = useContext(FoodListContext)
     const alert = useContext(AlertContext)
-    const foodItems = useContext(FoodListDetailsContext)
+    //const foodItems = useContext(FoodListDetailsContext)
 
     const removeFoodList = (id) => {
         foodLists.remove(id)
-        if (foodLists.isError) {
-            alert.show('Something went wrong...try again', 'danger')
-        } else {
-            alert.show('Food List is removed successfully!', 'success')
-        }
     }
+
+    useEffect(() => {
+        if (foodLists.isErrorRemove) {
+            alert.show('Something went wrong...try again', 'danger')
+        }
+    }, [foodLists.isErrorRemove])
 
     // const copyFoodList = (event) => {
     //     console.log(event.target.id)
